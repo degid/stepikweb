@@ -5,4 +5,5 @@ sudo /etc/init.d/nginx restart
 
 sudo rm -rf /etc/gunicorn.d/*
 sudo sudo ln -sf /home/box/web/etc/hello.py   /etc/gunicorn.d/hello.py
+sudo sudo ln -sf /home/box/web/etc/ask.py   /etc/gunicorn.d/ask.py
 sudo /etc/init.d/gunicorn restart

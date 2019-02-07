@@ -6,7 +6,7 @@ CONFIG = {
             '--daemon',
             '--workers=2',
             '--timeout=60',
-            'wsgi',
+            'ask.wsgi:application',
         ),
 }
 

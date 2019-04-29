@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from qa.views import test
 
-urlpatterns = patterns('qa.views',
+urlpatterns = [
     url(r'^$', test, name='qa'),
     url(r'^login/$', test, name='login'),
     url(r'^signup/$', test, name='signup'),
@@ -10,4 +10,4 @@ urlpatterns = patterns('qa.views',
     url(r'^popular/$', test, name='popular'),
     url(r'^new/$', test, name='new'),
     #url(r'admin/', admin.site.urls),
-    )
+]

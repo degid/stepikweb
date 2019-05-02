@@ -35,3 +35,64 @@ class AnswerForm(forms.Form):
         answer.author_id = self._user.id
         answer.save()
         return answer
+
+    class SignupForm(forms.Form):
+    username = forms.CharField(max_length=100, required=False)
+    email = forms.EmailField(required=False)
+    password = forms.CharField(widget=forms.PasswordInput, required=False)
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username:
+            raise forms.ValidationError('No username')
+        try:
+            User.objects.get(username=username)
+            raise forms.ValidationError('Change username')
+        except User.DoesNotExist:
+            pass
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise forms.ValidationError('No emale')
+        return email
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if not password:
+            raise forms.ValidationError('No password')
+        self.raw_passeord = password
+        return make_password(password)
+
+    def save(self):
+        user = User(**self.cleaned_data)
+        user.save()
+        return user
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField( max_length=100, required=False)
+    password = forms.CharField(widget=forms.PasswordInput, required=False)
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username:
+            raise forms.ValidationError('No username')
+        return username
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if not password:
+            raise forms.ValidationError('No password')
+        return password
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise forms.ValidationError('No username or password')
+        if not user.check_password(password):
+            raise forms.ValidationError('No username or password')

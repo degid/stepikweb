@@ -13,5 +13,12 @@
         <li>{{ answer }}, {{ answer.author_id }}</li>
     {% endfor %}
     </ul>
+    <form method="post" action="{{ question.get_url }}">
+        <fieldset>
+{% csrf_token %}
+{{ form.as_p }}
+        </fieldset>
+        <button type="submit">Send</button>
+    </form>
 </body>
 </html>
